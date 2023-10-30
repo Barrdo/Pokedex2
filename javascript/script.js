@@ -1,4 +1,4 @@
-const pokemonName = document.querySelector('.pokemon_name');
+let pokemonName = document.querySelector('.pokemon_name');
 const pokemonNumber = document.querySelector('.pokemon_number');
 const pokemonImage = document.querySelector('.pokemon_image');
 const form = document.querySelector('.form');
@@ -20,22 +20,24 @@ const fetchPokemon = async (pokemon) => {
 };
 const renderPokemon = async (pokemon) => {
 
-    pokemonName = 'Carregando...'
-    pokemonName = ''
+    pokemonName.innerHTML = 'Loading...'
+    pokemonNumber.innerHTML = ''
     const data = await fetchPokemon(pokemon);
 
     if(data){
 
-
+        console.log(data)
         pokemonImage.style.display = 'block'
-        pokemonNumber.innerHTML = data.id;
+        console.log(data.id)
         pokemonName.innerHTML = data.name;
-        pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front-default'];
+        pokemonNumber.innerHTML = data.id;
+        console.log(data['sprites']['versions']['generation-v']['black-white']['animated']['front-default'])
+        pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/${data.id}.png`
         input.value = '';
         searchPokemon = data.id;
     } else {
         pokemonImage.style.display = 'none'
-        pokemonName = 'Não encontrado:('
+        pokemonName = 'Not Found:('
         pokemonNumber = ''
     }
     
@@ -53,9 +55,9 @@ buttonPrev.addEventListener('click', () => {
     if (searchPokemon > 1){
         searchPokemon - 1;
         renderPokemon(searchPokemon);
-    }
     
-})
+    
+}})
 
 buttonNext.addEventListener('click', () => {
 
